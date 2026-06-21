@@ -56,14 +56,15 @@ export default function Dashboard() {
 
   const diarioColumns = [
     { title: 'Obra', dataIndex: 'obra', key: 'obra', ellipsis: true },
-    { title: 'Data', dataIndex: 'data', key: 'data', width: 110 },
-    { title: 'Responsável', dataIndex: 'responsavel', key: 'responsavel' },
+    { title: 'Data', dataIndex: 'data', key: 'data', width: 110, responsive: ['sm'] as ('sm')[] },
+    { title: 'Responsável', dataIndex: 'responsavel', key: 'responsavel', responsive: ['md'] as ('md')[], ellipsis: true },
     {
-      title: 'Atividades', dataIndex: 'atividades', key: 'atividades', width: 100,
+      title: 'Ativ.', dataIndex: 'atividades', key: 'atividades', width: 70,
+      responsive: ['sm'] as ('sm')[],
       render: (v: number) => <Tag color="blue">{v}</Tag>,
     },
     {
-      title: '', key: 'action', width: 80,
+      title: '', key: 'action', width: 60,
       render: (_: unknown, r: { id: string }) => (
         <Button size="small" type="link" onClick={() => navigate(`/diario/${r.id}`)}>Ver</Button>
       ),
@@ -185,6 +186,7 @@ export default function Dashboard() {
               columns={diarioColumns}
               pagination={false}
               size="small"
+              scroll={{ x: 'max-content' }}
             />
           </Card>
         </Col>

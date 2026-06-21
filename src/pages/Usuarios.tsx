@@ -67,17 +67,22 @@ export default function Usuarios() {
     },
     {
       title: 'Perfil', dataIndex: 'role', key: 'role',
+      responsive: ['sm'] as ('sm')[],
       render: (v: UserRole) => <Tag color={roleColors[v]}>{roleLabels[v]}</Tag>,
     },
-    { title: 'Empresa', dataIndex: 'empresa', key: 'empresa' },
     {
-      title: 'Status', dataIndex: 'ativo', key: 'ativo',
+      title: 'Empresa', dataIndex: 'empresa', key: 'empresa',
+      responsive: ['md'] as ('md')[],
+      ellipsis: true,
+    },
+    {
+      title: 'Status', dataIndex: 'ativo', key: 'ativo', width: 80,
       render: (v: boolean, r: User) => (
         <Switch size="small" checked={v} onChange={(checked) => updateUser(r.id, { ativo: checked })} />
       ),
     },
     {
-      title: 'Ações', key: 'actions', width: 100,
+      title: 'Ações', key: 'actions', width: 90,
       render: (_: unknown, r: User) => (
         <Space>
           <Tooltip title="Editar"><Button size="small" icon={<EditOutlined />} onClick={() => openEdit(r)} /></Tooltip>
@@ -93,7 +98,7 @@ export default function Usuarios() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Title level={3} style={{ margin: 0 }}><TeamOutlined /> Gerenciamento de Usuários</Title>
           <Text type="secondary">Controle de acesso e permissões do sistema</Text>
@@ -101,15 +106,15 @@ export default function Usuarios() {
         <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}>Novo Usuário</Button>
       </div>
 
-      <Row gutter={16} style={{ marginBottom: 24 }}>
-        <Col span={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Total de Usuários" value={users.length} prefix={<UserOutlined />} /></Card></Col>
-        <Col span={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Usuários Ativos" value={ativos} valueStyle={{ color: '#52c41a' }} /></Card></Col>
-        <Col span={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Administradores" value={admins} valueStyle={{ color: '#f5222d' }} /></Card></Col>
-        <Col span={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Inativos" value={users.length - ativos} valueStyle={{ color: '#8c8c8c' }} /></Card></Col>
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+        <Col xs={12} sm={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Total de Usuários" value={users.length} prefix={<UserOutlined />} /></Card></Col>
+        <Col xs={12} sm={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Usuários Ativos" value={ativos} valueStyle={{ color: '#52c41a' }} /></Card></Col>
+        <Col xs={12} sm={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Administradores" value={admins} valueStyle={{ color: '#f5222d' }} /></Card></Col>
+        <Col xs={12} sm={6}><Card bordered={false} style={{ borderRadius: 12 }}><Statistic title="Inativos" value={users.length - ativos} valueStyle={{ color: '#8c8c8c' }} /></Card></Col>
       </Row>
 
       <Card bordered={false} style={{ borderRadius: 12 }}>
-        <Table dataSource={users.map((u) => ({ ...u, key: u.id }))} columns={columns} pagination={{ pageSize: 10 }} />
+        <Table dataSource={users.map((u) => ({ ...u, key: u.id }))} columns={columns} pagination={{ pageSize: 10 }} scroll={{ x: 'max-content' }} />
       </Card>
 
       <Modal
@@ -118,6 +123,7 @@ export default function Usuarios() {
         onOk={handleSave}
         onCancel={() => setModalOpen(false)}
         width={520}
+        style={{ maxWidth: '95vw' }}
         okText="Salvar"
         cancelText="Cancelar"
       >
