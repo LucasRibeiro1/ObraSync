@@ -67,7 +67,7 @@ export default function Obras() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Title level={3} style={{ margin: 0 }}>Gerenciamento de Obras</Title>
           <Text type="secondary">Cadastro e controle de obras ativas e concluídas</Text>
@@ -75,18 +75,18 @@ export default function Obras() {
         <Button type="primary" icon={<PlusOutlined />} onClick={openAdd}>Nova Obra</Button>
       </div>
 
-      <Row gutter={16} style={{ marginBottom: 24 }}>
-        <Col span={8}>
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+        <Col xs={24} sm={8}>
           <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
             <Statistic title="Obras Ativas" value={ativas} prefix={<BuildOutlined style={{ color: '#1a56db' }} />} valueStyle={{ color: '#1a56db' }} />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={8}>
           <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
             <Statistic title="Concluídas" value={concluidas} valueStyle={{ color: '#52c41a' }} />
           </Card>
         </Col>
-        <Col span={8}>
+        <Col xs={24} sm={8}>
           <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
             <Statistic title="Paralisadas" value={paralisadas} valueStyle={{ color: '#faad14' }} />
           </Card>
@@ -94,7 +94,7 @@ export default function Obras() {
       </Row>
 
       <Card bordered={false} style={{ borderRadius: 12 }}>
-        <Table dataSource={obras.map((o) => ({ ...o, key: o.id }))} columns={columns} pagination={{ pageSize: 10 }} />
+        <Table dataSource={obras.map((o) => ({ ...o, key: o.id }))} columns={columns} pagination={{ pageSize: 10 }} scroll={{ x: 800 }} />
       </Card>
 
       <Modal
@@ -103,6 +103,7 @@ export default function Obras() {
         onOk={handleSave}
         onCancel={() => setModalOpen(false)}
         width={640}
+        style={{ maxWidth: '95vw' }}
         okText="Salvar"
         cancelText="Cancelar"
       >
@@ -117,12 +118,12 @@ export default function Obras() {
             <Input placeholder="Nome do responsável" />
           </Form.Item>
           <Row gutter={16}>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="dataInicio" label="Data de Início" rules={[{ required: true }]}>
                 <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="previsaoTermino" label="Previsão de Término" rules={[{ required: true }]}>
                 <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
               </Form.Item>

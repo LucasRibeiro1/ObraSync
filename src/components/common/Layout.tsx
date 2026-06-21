@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layout as AntLayout, Menu, Avatar, Dropdown, Button, Badge, Space, Typography, Switch } from 'antd';
+import { Layout as AntLayout, Menu, Avatar, Dropdown, Button, Badge, Space, Typography, Switch, Drawer, Grid } from 'antd';
 import {
   DashboardOutlined, BookOutlined, SafetyOutlined, UserOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SettingOutlined,
@@ -11,6 +11,7 @@ import type { UserRole } from '../../types';
 
 const { Sider, Header, Content } = AntLayout;
 const { Text } = Typography;
+const { useBreakpoint } = Grid;
 
 const roleLabels: Record<UserRole, string> = {
   admin: 'Administrador',
@@ -30,6 +31,9 @@ const roleColors: Record<UserRole, string> = {
 
 export default function Layout() {
   const [collapsed, setCollapsed] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const screens = useBreakpoint();
+  const isMobile = !screens.md;
   const navigate = useNavigate();
   const location = useLocation();
   const { currentUser, isDarkMode, toggleTheme } = useAuthStore();
@@ -51,6 +55,11 @@ export default function Layout() {
     return path;
   };
 
+  const handleMenuClick = ({ key }: { key: string }) => {
+    navigate(key);
+    if (isMobile) setDrawerOpen(false);
+  };
+
   const userMenu = {
     items: [
       { key: 'profile', icon: <UserOutlined />, label: 'Meu Perfil' },
@@ -63,59 +72,85 @@ export default function Layout() {
     },
   };
 
+  const siderBg = isDarkMode ? '#141414' : '#001529';
+
+  const siderContent = (
+    <>
+      <div style={{
+        padding: collapsed && !isMobile ? '16px 8px' : '16px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        marginBottom: 8,
+        transition: 'all 0.2s',
+      }}>
+        <BankOutlined style={{ fontSize: 24, color: '#1a56db', flexShrink: 0 }} />
+        {(!collapsed || isMobile) && (
+          <div>
+            <Text strong style={{ color: '#fff', fontSize: 16, display: 'block', lineHeight: 1.2 }}>
+              ObraSync
+            </Text>
+            <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>
+              Gestão de Obras
+            </Text>
+          </div>
+        )}
+      </div>
+
+      <Menu
+        theme="dark"
+        mode="inline"
+        selectedKeys={[getSelectedKey()]}
+        items={menuItems}
+        onClick={handleMenuClick}
+        style={{ background: 'transparent', border: 'none' }}
+      />
+    </>
+  );
+
   return (
     <AntLayout style={{ minHeight: '100vh' }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        trigger={null}
-        width={240}
-        style={{
-          background: isDarkMode ? '#141414' : '#001529',
-          boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          zIndex: 100,
-          overflow: 'auto',
-        }}
-      >
-        <div style={{
-          padding: collapsed ? '16px 8px' : '16px 24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-          borderBottom: '1px solid rgba(255,255,255,0.1)',
-          marginBottom: 8,
-          transition: 'all 0.2s',
-        }}>
-          <BankOutlined style={{ fontSize: 24, color: '#1a56db' }} />
-          {!collapsed && (
-            <div>
-              <Text strong style={{ color: '#fff', fontSize: 16, display: 'block', lineHeight: 1.2 }}>
-                ObraSync
-              </Text>
-              <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11 }}>
-                Gestão de Obras
-              </Text>
-            </div>
-          )}
-        </div>
+      {!isMobile && (
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          trigger={null}
+          width={240}
+          style={{
+            background: siderBg,
+            boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 100,
+            overflow: 'auto',
+          }}
+        >
+          {siderContent}
+        </Sider>
+      )}
 
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[getSelectedKey()]}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{ background: 'transparent', border: 'none' }}
-        />
-      </Sider>
+      {isMobile && (
+        <Drawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          placement="left"
+          width={240}
+          styles={{
+            body: { padding: 0, background: siderBg, overflowX: 'hidden' },
+            header: { display: 'none' },
+            mask: { background: 'rgba(0,0,0,0.45)' },
+          }}
+        >
+          {siderContent}
+        </Drawer>
+      )}
 
-      <AntLayout style={{ marginLeft: collapsed ? 80 : 240, transition: 'margin-left 0.2s' }}>
+      <AntLayout style={{ marginLeft: isMobile ? 0 : (collapsed ? 80 : 240), transition: 'margin-left 0.2s' }}>
         <Header style={{
-          padding: '0 24px',
+          padding: '0 16px',
           background: isDarkMode ? '#1f1f1f' : '#fff',
           display: 'flex',
           alignItems: 'center',
@@ -128,8 +163,10 @@ export default function Layout() {
         }}>
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
+            icon={isMobile
+              ? <MenuUnfoldOutlined />
+              : (collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />)}
+            onClick={() => isMobile ? setDrawerOpen(!drawerOpen) : setCollapsed(!collapsed)}
             style={{ fontSize: 16 }}
           />
 
@@ -152,21 +189,23 @@ export default function Layout() {
                 >
                   {currentUser?.nome?.charAt(0) ?? 'U'}
                 </Avatar>
-                <div style={{ lineHeight: 1.3 }}>
-                  <Text strong style={{ fontSize: 13, display: 'block' }}>
-                    {currentUser?.nome ?? 'Usuário'}
-                  </Text>
-                  <Text type="secondary" style={{ fontSize: 11 }}>
-                    {roleLabels[currentUser?.role ?? 'consulta']}
-                  </Text>
-                </div>
+                {!isMobile && (
+                  <div style={{ lineHeight: 1.3 }}>
+                    <Text strong style={{ fontSize: 13, display: 'block' }}>
+                      {currentUser?.nome ?? 'Usuário'}
+                    </Text>
+                    <Text type="secondary" style={{ fontSize: 11 }}>
+                      {roleLabels[currentUser?.role ?? 'consulta']}
+                    </Text>
+                  </div>
+                )}
               </Space>
             </Dropdown>
           </Space>
         </Header>
 
         <Content style={{
-          margin: '24px',
+          margin: isMobile ? '16px 12px' : '24px',
           minHeight: 'calc(100vh - 112px)',
         }}>
           <Outlet />

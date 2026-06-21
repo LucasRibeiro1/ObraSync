@@ -72,12 +72,12 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Title level={3} style={{ margin: 0 }}>Dashboard Executivo</Title>
           <Text type="secondary">Visão geral — {dayjs().format('DD [de] MMMM [de] YYYY')}</Text>
         </div>
-        <Space>
+        <Space wrap>
           <Button icon={<PlusOutlined />} type="primary" onClick={() => navigate('/diario/novo')}>
             Novo Diário
           </Button>

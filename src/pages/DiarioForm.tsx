@@ -329,13 +329,13 @@ export default function DiarioForm() {
         <Form form={subForm} layout="vertical" style={{ marginTop: 16 }}>
           <Form.Item name="descricao" label="Descrição" rules={[{ required: true }]}><Input.TextArea rows={2} /></Form.Item>
           <Row gutter={12}>
-            <Col span={12}><Form.Item name="local" label="Local" rules={[{ required: true }]}><Input /></Form.Item></Col>
-            <Col span={6}><Form.Item name="quantidade" label="Quantidade" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} /></Form.Item></Col>
-            <Col span={6}><Form.Item name="unidade" label="Unidade" rules={[{ required: true }]}><Input placeholder="m², m, unid" /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="local" label="Local" rules={[{ required: true }]}><Input /></Form.Item></Col>
+            <Col xs={12} sm={6}><Form.Item name="quantidade" label="Quantidade" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} /></Form.Item></Col>
+            <Col xs={12} sm={6}><Form.Item name="unidade" label="Unidade" rules={[{ required: true }]}><Input placeholder="m², m, unid" /></Form.Item></Col>
           </Row>
           <Row gutter={12}>
-            <Col span={12}><Form.Item name="equipe" label="Equipe Responsável" rules={[{ required: true }]}><Input /></Form.Item></Col>
-            <Col span={12}><Form.Item name="status" label="Status" rules={[{ required: true }]}><Select options={STATUS_OPTIONS} /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="equipe" label="Equipe Responsável" rules={[{ required: true }]}><Input /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="status" label="Status" rules={[{ required: true }]}><Select options={STATUS_OPTIONS} /></Form.Item></Col>
           </Row>
           <Form.Item name="observacoes" label="Observações"><Input.TextArea rows={2} /></Form.Item>
         </Form>
@@ -346,8 +346,8 @@ export default function DiarioForm() {
         <Form form={subForm} layout="vertical" style={{ marginTop: 16 }}>
           <Form.Item name="material" label="Material" rules={[{ required: true }]}><Input /></Form.Item>
           <Row gutter={12}>
-            <Col span={12}><Form.Item name="quantidade" label="Quantidade" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} /></Form.Item></Col>
-            <Col span={12}><Form.Item name="unidade" label="Unidade" rules={[{ required: true }]}><Input placeholder="sacos, m³, unid" /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="quantidade" label="Quantidade" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="unidade" label="Unidade" rules={[{ required: true }]}><Input placeholder="sacos, m³, unid" /></Form.Item></Col>
           </Row>
           <Form.Item name="fornecedor" label="Fornecedor"><Input /></Form.Item>
           <Form.Item name="observacoes" label="Observações"><Input.TextArea rows={2} /></Form.Item>
@@ -360,8 +360,8 @@ export default function DiarioForm() {
           <Form.Item name="equipamento" label="Equipamento" rules={[{ required: true }]}><Input /></Form.Item>
           <Form.Item name="operador" label="Operador Responsável" rules={[{ required: true }]}><Input /></Form.Item>
           <Row gutter={12}>
-            <Col span={12}><Form.Item name="horasUtilizacao" label="Horas de Utilização" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} max={24} /></Form.Item></Col>
-            <Col span={12}><Form.Item name="situacao" label="Situação" rules={[{ required: true }]}><Input placeholder="Bom estado, Manutenção..." /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="horasUtilizacao" label="Horas de Utilização" rules={[{ required: true }]}><InputNumber style={{ width: '100%' }} min={0} max={24} /></Form.Item></Col>
+            <Col xs={24} sm={12}><Form.Item name="situacao" label="Situação" rules={[{ required: true }]}><Input placeholder="Bom estado, Manutenção..." /></Form.Item></Col>
           </Row>
           <Form.Item name="observacoes" label="Observações"><Input.TextArea rows={2} /></Form.Item>
         </Form>

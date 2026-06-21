@@ -145,7 +145,7 @@ export default function SegurancaDashboard() {
           {acidentes.length === 0 ? (
             <Alert message="Nenhum acidente registrado. Mantenha assim!" type="success" showIcon />
           ) : (
-            <Table dataSource={acidentes.map((a) => ({ ...a, key: a.id }))} columns={acidenteColumns} pagination={{ pageSize: 8 }} />
+            <Table dataSource={acidentes.map((a) => ({ ...a, key: a.id }))} columns={acidenteColumns} pagination={{ pageSize: 8 }} scroll={{ x: 800 }} />
           )}
         </div>
       ),
@@ -163,7 +163,7 @@ export default function SegurancaDashboard() {
           {incidentes.length === 0 ? (
             <Alert message="Nenhum incidente registrado." type="info" showIcon />
           ) : (
-            <Table dataSource={incidentes.map((i) => ({ ...i, key: i.id }))} columns={incidenteColumns} pagination={{ pageSize: 8 }} />
+            <Table dataSource={incidentes.map((i) => ({ ...i, key: i.id }))} columns={incidenteColumns} pagination={{ pageSize: 8 }} scroll={{ x: 700 }} />
           )}
         </div>
       ),
@@ -178,7 +178,7 @@ export default function SegurancaDashboard() {
               Nova Ação Preventiva
             </Button>
           </div>
-          <Table dataSource={acoesPreventivas.map((a) => ({ ...a, key: a.id }))} columns={acaoColumns} pagination={{ pageSize: 8 }} />
+          <Table dataSource={acoesPreventivas.map((a) => ({ ...a, key: a.id }))} columns={acaoColumns} pagination={{ pageSize: 8 }} scroll={{ x: 750 }} />
         </div>
       ),
     },
@@ -192,7 +192,7 @@ export default function SegurancaDashboard() {
               Novo Relato
             </Button>
           </div>
-          <Table dataSource={relatos.map((r) => ({ ...r, key: r.id }))} columns={relatoColumns} pagination={{ pageSize: 8 }} />
+          <Table dataSource={relatos.map((r) => ({ ...r, key: r.id }))} columns={relatoColumns} pagination={{ pageSize: 8 }} scroll={{ x: 700 }} />
         </div>
       ),
     },

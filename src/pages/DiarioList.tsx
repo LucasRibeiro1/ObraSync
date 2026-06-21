@@ -108,7 +108,7 @@ export default function DiarioList() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Title level={3} style={{ margin: 0 }}><BookOutlined /> Diário de Obra</Title>
           <Text type="secondary">Histórico completo de registros diários</Text>
@@ -119,8 +119,8 @@ export default function DiarioList() {
       </div>
 
       <Card bordered={false} style={{ marginBottom: 16, borderRadius: 12 }}>
-        <Row gutter={16} align="middle">
-          <Col flex="auto">
+        <Row gutter={[16, 12]} align="middle">
+          <Col xs={24} md={8} lg={10}>
             <Input
               prefix={<SearchOutlined />}
               placeholder="Buscar por obra, responsável ou nº relatório..."
@@ -129,18 +129,19 @@ export default function DiarioList() {
               allowClear
             />
           </Col>
-          <Col>
+          <Col xs={24} sm={12} md={8} lg={7}>
             <Select
               placeholder="Filtrar por obra"
-              style={{ width: 220 }}
+              style={{ width: '100%' }}
               allowClear
               value={obraFilter}
               onChange={setObraFilter}
               options={obras.map((o) => ({ value: o.nome, label: o.nome }))}
             />
           </Col>
-          <Col>
+          <Col xs={24} sm={12} md={8} lg={7}>
             <RangePicker
+              style={{ width: '100%' }}
               format="DD/MM/YYYY"
               onChange={(dates) => setDateRange(dates as [dayjs.Dayjs, dayjs.Dayjs] | null)}
             />
