@@ -3,7 +3,8 @@ import { Layout as AntLayout, Menu, Avatar, Dropdown, Button, Badge, Space, Typo
 import {
   DashboardOutlined, BookOutlined, SafetyOutlined, UserOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SettingOutlined,
-  BulbOutlined, BankOutlined, BellOutlined, BuildOutlined, CalendarOutlined, FileTextOutlined,
+  BulbOutlined, BankOutlined, BellOutlined, BuildOutlined, CalendarOutlined,
+  FileTextOutlined, SolutionOutlined, DollarOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store';
@@ -40,12 +41,47 @@ export default function Layout() {
 
   const menuItems = [
     { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-    { key: '/obras', icon: <BuildOutlined />, label: 'Obras' },
-    { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
-    { key: '/cronograma', icon: <CalendarOutlined />, label: 'Cronograma' },
-    { key: '/notas', icon: <FileTextOutlined />, label: 'Notas Fiscais' },
-    { key: '/seguranca', icon: <SafetyOutlined />, label: 'Segurança do Trabalho' },
-    ...(currentUser?.role === 'admin' ? [{ key: '/usuarios', icon: <UserOutlined />, label: 'Usuários' }] : []),
+    { type: 'divider' as const },
+    {
+      type: 'group' as const,
+      label: 'Cadastros',
+      children: [
+        { key: '/obras', icon: <BuildOutlined />, label: 'Obras' },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: 'Gestão de Obras',
+      children: [
+        { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
+        { key: '/cronograma', icon: <CalendarOutlined />, label: 'Cronograma' },
+        { key: '/seguranca', icon: <SafetyOutlined />, label: 'Segurança do Trabalho' },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: 'Gestão Financeira',
+      children: [
+        { key: '/notas', icon: <FileTextOutlined />, label: 'Notas Fiscais' },
+        { key: '/financeiro', icon: <DollarOutlined />, label: 'Financeiro', disabled: true },
+      ],
+    },
+    {
+      type: 'group' as const,
+      label: 'Gestão de Contratos',
+      children: [
+        { key: '/contratos', icon: <SolutionOutlined />, label: 'Contratos', disabled: true },
+      ],
+    },
+    ...(currentUser?.role === 'admin'
+      ? [{
+          type: 'group' as const,
+          label: 'Administração',
+          children: [
+            { key: '/usuarios', icon: <UserOutlined />, label: 'Usuários' },
+          ],
+        }]
+      : []),
   ];
 
   const getSelectedKey = () => {
@@ -56,6 +92,8 @@ export default function Layout() {
     if (path.startsWith('/seguranca')) return '/seguranca';
     if (path.startsWith('/obras')) return '/obras';
     if (path.startsWith('/usuarios')) return '/usuarios';
+    if (path.startsWith('/contratos')) return '/contratos';
+    if (path.startsWith('/financeiro')) return '/financeiro';
     return path;
   };
 
