@@ -15,6 +15,12 @@ import AcaoForm from './pages/AcaoForm';
 import RelatoForm from './pages/RelatoForm';
 import Usuarios from './pages/Usuarios';
 import Obras from './pages/Obras';
+import CronogramaList from './pages/CronogramaList';
+import CronogramaView from './pages/CronogramaView';
+import CronogramaForm from './pages/CronogramaForm';
+import NotaFiscalList from './pages/NotaFiscalList';
+import NotaFiscalImport from './pages/NotaFiscalImport';
+import NotaFiscalDetail from './pages/NotaFiscalDetail';
 
 const queryClient = new QueryClient();
 
@@ -55,6 +61,13 @@ export default function App() {
                 <Route path="seguranca/relato/novo" element={<RelatoForm />} />
                 <Route path="seguranca/relato/:id/editar" element={<RelatoForm />} />
                 <Route path="usuarios" element={<Usuarios />} />
+                <Route path="cronograma" element={<CronogramaList />} />
+                <Route path="cronograma/novo" element={<CronogramaForm />} />
+                <Route path="cronograma/:id" element={<CronogramaView />} />
+                <Route path="cronograma/:id/editar" element={<CronogramaForm />} />
+                <Route path="notas" element={<NotaFiscalList />} />
+                <Route path="notas/importar" element={<NotaFiscalImport />} />
+                <Route path="notas/:id" element={<NotaFiscalDetail />} />
               </Route>
             </Routes>
           </BrowserRouter>

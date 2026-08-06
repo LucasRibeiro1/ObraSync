@@ -3,7 +3,7 @@ import { Layout as AntLayout, Menu, Avatar, Dropdown, Button, Badge, Space, Typo
 import {
   DashboardOutlined, BookOutlined, SafetyOutlined, UserOutlined,
   MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SettingOutlined,
-  BulbOutlined, BankOutlined, BellOutlined, BuildOutlined,
+  BulbOutlined, BankOutlined, BellOutlined, BuildOutlined, CalendarOutlined, FileTextOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store';
@@ -42,6 +42,8 @@ export default function Layout() {
     { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
     { key: '/obras', icon: <BuildOutlined />, label: 'Obras' },
     { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
+    { key: '/cronograma', icon: <CalendarOutlined />, label: 'Cronograma' },
+    { key: '/notas', icon: <FileTextOutlined />, label: 'Notas Fiscais' },
     { key: '/seguranca', icon: <SafetyOutlined />, label: 'Segurança do Trabalho' },
     ...(currentUser?.role === 'admin' ? [{ key: '/usuarios', icon: <UserOutlined />, label: 'Usuários' }] : []),
   ];
@@ -49,6 +51,8 @@ export default function Layout() {
   const getSelectedKey = () => {
     const path = location.pathname;
     if (path.startsWith('/diario')) return '/diario';
+    if (path.startsWith('/cronograma')) return '/cronograma';
+    if (path.startsWith('/notas')) return '/notas';
     if (path.startsWith('/seguranca')) return '/seguranca';
     if (path.startsWith('/obras')) return '/obras';
     if (path.startsWith('/usuarios')) return '/usuarios';

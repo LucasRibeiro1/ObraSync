@@ -45,7 +45,7 @@ export default function AcaoForm() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => navigate('/seguranca')}>Voltar</Button>
           <Title level={3} style={{ margin: 0 }}>{isEdit ? 'Editar' : 'Nova'} Ação Preventiva</Title>

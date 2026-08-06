@@ -87,12 +87,12 @@ export default function DiarioView() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => navigate('/diario')}>Voltar</Button>
           <Title level={3} style={{ margin: 0 }}>Diário de Obra — {diario.numeroRelatorio}</Title>
         </div>
-        <Space>
+        <Space wrap>
           <Button icon={<EditOutlined />} onClick={() => navigate(`/diario/${id}/editar`)}>Editar</Button>
           <Button icon={<PrinterOutlined />} onClick={() => window.print()}>Imprimir</Button>
           <Button type="primary" icon={<FilePdfOutlined />} onClick={handleExportPDF}>Exportar PDF</Button>
@@ -126,23 +126,23 @@ export default function DiarioView() {
         </Card>
 
         {/* KPIs */}
-        <Row gutter={16} style={{ marginBottom: 16 }}>
-          <Col span={6}>
+        <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+          <Col xs={12} sm={6}>
             <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
               <Statistic title="Equipe" value={diario.equipe.length} suffix="pessoas" prefix={<TeamOutlined />} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={12} sm={6}>
             <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
               <Statistic title="Atividades" value={diario.atividades.length} prefix={<AppstoreOutlined />} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={12} sm={6}>
             <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
               <Statistic title="Materiais" value={diario.materiais.length} prefix={<InboxOutlined />} />
             </Card>
           </Col>
-          <Col span={6}>
+          <Col xs={12} sm={6}>
             <Card bordered={false} style={{ borderRadius: 12, textAlign: 'center' }}>
               <Statistic title="Equipamentos" value={diario.equipamentos.length} prefix={<ToolOutlined />} />
             </Card>

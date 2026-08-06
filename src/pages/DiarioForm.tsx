@@ -251,7 +251,7 @@ export default function DiarioForm() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12, marginBottom: 24 }}>
         <div>
           <Button icon={<ArrowLeftOutlined />} type="text" onClick={() => navigate('/diario')} style={{ marginBottom: 4 }}>Voltar</Button>
           <Title level={3} style={{ margin: 0 }}>{isEdit ? 'Editar Diário de Obra' : 'Novo Diário de Obra'}</Title>
