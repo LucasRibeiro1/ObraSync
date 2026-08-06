@@ -55,8 +55,8 @@ export default function Layout() {
       icon: <ToolOutlined />,
       label: 'Gestão de Obras',
       children: [
-        { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
         { key: '/cronograma', icon: <CalendarOutlined />, label: 'Cronograma' },
+        { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
         { key: '/seguranca', icon: <SafetyOutlined />, label: 'Segurança do Trabalho' },
       ],
     },
