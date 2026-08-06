@@ -5,6 +5,7 @@ import {
   MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined, SettingOutlined,
   BulbOutlined, BankOutlined, BellOutlined, BuildOutlined, CalendarOutlined,
   FileTextOutlined, SolutionOutlined, DollarOutlined,
+  DatabaseOutlined, ToolOutlined, WalletOutlined, FileProtectOutlined, ControlOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../../store';
@@ -41,16 +42,17 @@ export default function Layout() {
 
   const menuItems = [
     { key: '/dashboard', icon: <DashboardOutlined />, label: 'Dashboard' },
-    { type: 'divider' as const },
     {
-      type: 'group' as const,
+      key: 'mod-cadastros',
+      icon: <DatabaseOutlined />,
       label: 'Cadastros',
       children: [
         { key: '/obras', icon: <BuildOutlined />, label: 'Obras' },
       ],
     },
     {
-      type: 'group' as const,
+      key: 'mod-gestao-obras',
+      icon: <ToolOutlined />,
       label: 'Gestão de Obras',
       children: [
         { key: '/diario', icon: <BookOutlined />, label: 'Diário de Obra' },
@@ -59,7 +61,8 @@ export default function Layout() {
       ],
     },
     {
-      type: 'group' as const,
+      key: 'mod-financeiro',
+      icon: <WalletOutlined />,
       label: 'Gestão Financeira',
       children: [
         { key: '/notas', icon: <FileTextOutlined />, label: 'Notas Fiscais' },
@@ -67,7 +70,8 @@ export default function Layout() {
       ],
     },
     {
-      type: 'group' as const,
+      key: 'mod-contratos',
+      icon: <FileProtectOutlined />,
       label: 'Gestão de Contratos',
       children: [
         { key: '/contratos', icon: <SolutionOutlined />, label: 'Contratos', disabled: true },
@@ -75,7 +79,8 @@ export default function Layout() {
     },
     ...(currentUser?.role === 'admin'
       ? [{
-          type: 'group' as const,
+          key: 'mod-admin',
+          icon: <ControlOutlined />,
           label: 'Administração',
           children: [
             { key: '/usuarios', icon: <UserOutlined />, label: 'Usuários' },
@@ -98,8 +103,10 @@ export default function Layout() {
   };
 
   const handleMenuClick = ({ key }: { key: string }) => {
-    navigate(key);
-    if (isMobile) setDrawerOpen(false);
+    if (key.startsWith('/')) {
+      navigate(key);
+      if (isMobile) setDrawerOpen(false);
+    }
   };
 
   const userMenu = {
@@ -144,6 +151,7 @@ export default function Layout() {
         theme="dark"
         mode="inline"
         selectedKeys={[getSelectedKey()]}
+        defaultOpenKeys={['mod-cadastros', 'mod-gestao-obras', 'mod-financeiro', 'mod-contratos', 'mod-admin']}
         items={menuItems}
         onClick={handleMenuClick}
         style={{ background: 'transparent', border: 'none' }}
